@@ -3,7 +3,9 @@ import 'package:ayur/application/core/theme/app_theme.dart';
 import 'package:ayur/application/core/utils/device_size.dart';
 import 'package:ayur/application/core/utils/enums.dart';
 import 'package:ayur/application/core/utils/toast.dart';
+import 'package:ayur/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:ayur/presentation/bloc/login_bloc/login_bloc.dart';
+import 'package:ayur/presentation/bloc/register_bloc/register_bloc.dart';
 import 'package:ayur/presentation/bloc/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +31,12 @@ class MyApp extends StatelessWidget {
 
         BlocProvider<LoginBloc>(
           create: (_) => LoginBloc(),
+        ),
+        BlocProvider<HomeBloc>(
+          create: (_) => HomeBloc(),
+        ),
+        BlocProvider<RegisterBloc>(
+          create: (_) => RegisterBloc(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, AppThemeMode>(

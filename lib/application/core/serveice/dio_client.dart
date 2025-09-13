@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ayur/application/core/utils/extentions.dart';
 import 'package:ayur/application/core/utils/logger.dart';
 import 'package:ayur/application/core/utils/urls.dart';
+import 'package:ayur/data/storage/login_data.dart';
 import 'package:ayur/domain/core/exception/custom_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -196,16 +197,26 @@ class DioClient {
   }
 }
 
+
+
 class LoggingInterceptor extends InterceptorsWrapper {
+  Future<String?> _getToken() async {
+    final login = await LoginDataStore.getLogin();
+    return login?.token;
+
+  }
+
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     DateTime now = DateTime.now().toUtc();
-    // String? token = box.read(AppConstants.token);
+
+    final token = await _getToken();
+
     options.headers.addAll({
       'Timestamp': now.millisecondsSinceEpoch,
       'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer ',
+      'Authorization': token != null ? 'Bearer $token' : '',
       'Access-Control-Allow-Origin': '*',
       'Accept': 'application/json',
       'Device-Type': Platform.isAndroid
@@ -213,9 +224,6 @@ class LoggingInterceptor extends InterceptorsWrapper {
           : Platform.isIOS
               ? 2
               : 0,
-      // 'Device-Token': AppConstants.fcmToken ?? "",
-      // 'Language': di.sl<LanguageBloc>().locale.languageCode,
-      // 'User-Agent': AppConstants.userAgent ?? {}
     });
 
     Logger.logWarning("Headers: ${options.headers.toString()}");
@@ -230,30 +238,18 @@ class LoggingInterceptor extends InterceptorsWrapper {
       if (response.statusCode == 201) {
         return super.onResponse(response, handler);
       } else if (response.data['status'] == true) {
-        return response.data['status'] == true
-            ? super.onResponse(response, handler)
-            : handler.reject(
-                DioException(
-                  requestOptions: response.requestOptions,
-                  error: response.data,
-                  response: response,
-                  type: DioExceptionType.unknown,
-                ),
-              );
-        //newly added else
+        return super.onResponse(response, handler);
       } else {
-        return response.data['status'] == true
-            ? super.onResponse(response, handler)
-            : handler.reject(
-                DioException(
-                  requestOptions: response.requestOptions,
-                  error: response.data,
-                  response: response,
-                  type: DioExceptionType.unknown,
-                ),
-              );
+        return handler.reject(
+          DioException(
+            requestOptions: response.requestOptions,
+            error: response.data,
+            response: response,
+            type: DioExceptionType.unknown,
+          ),
+        );
       }
-    } catch (e) {
+    } catch (_) {
       handler.reject(
         DioException(
           requestOptions: response.requestOptions,
@@ -264,12 +260,83 @@ class LoggingInterceptor extends InterceptorsWrapper {
       );
     }
   }
-
-  @override
-  Future onError(DioException err, ErrorInterceptorHandler handler) async {
-    return super.onError(err, handler);
-  }
 }
+
+
+// class LoggingInterceptor extends InterceptorsWrapper {
+//   @override
+//   Future onRequest(
+//       RequestOptions options, RequestInterceptorHandler handler) async {
+//     DateTime now = DateTime.now().toUtc();
+//     // String? token = box.read(AppConstants.token);
+//     options.headers.addAll({
+//       'Timestamp': now.millisecondsSinceEpoch,
+//       'Content-Type': 'application/json; charset=UTF-8',
+//       'Authorization': 'Bearer ',
+//       'Access-Control-Allow-Origin': '*',
+//       'Accept': 'application/json',
+//       'Device-Type': Platform.isAndroid
+//           ? 1
+//           : Platform.isIOS
+//               ? 2
+//               : 0,
+//       // 'Device-Token': AppConstants.fcmToken ?? "",
+//       // 'Language': di.sl<LanguageBloc>().locale.languageCode,
+//       // 'User-Agent': AppConstants.userAgent ?? {}
+//     });
+
+//     Logger.logWarning("Headers: ${options.headers.toString()}");
+//     Logger.logWarning("Parms: ${options.data.toString()}");
+//     return super.onRequest(options, handler);
+//   }
+
+//   @override
+//   Future onResponse(
+//       Response response, ResponseInterceptorHandler handler) async {
+//     try {
+//       if (response.statusCode == 201) {
+//         return super.onResponse(response, handler);
+//       } else if (response.data['status'] == true) {
+//         return response.data['status'] == true
+//             ? super.onResponse(response, handler)
+//             : handler.reject(
+//                 DioException(
+//                   requestOptions: response.requestOptions,
+//                   error: response.data,
+//                   response: response,
+//                   type: DioExceptionType.unknown,
+//                 ),
+//               );
+//         //newly added else
+//       } else {
+//         return response.data['status'] == true
+//             ? super.onResponse(response, handler)
+//             : handler.reject(
+//                 DioException(
+//                   requestOptions: response.requestOptions,
+//                   error: response.data,
+//                   response: response,
+//                   type: DioExceptionType.unknown,
+//                 ),
+//               );
+//       }
+//     } catch (e) {
+//       handler.reject(
+//         DioException(
+//           requestOptions: response.requestOptions,
+//           error: "Something went wrong",
+//           response: response,
+//           type: DioExceptionType.unknown,
+//         ),
+//       );
+//     }
+//   }
+
+//   @override
+//   Future onError(DioException err, ErrorInterceptorHandler handler) async {
+//     return super.onError(err, handler);
+//   }
+// }
 
 class InternetConnectionInterceptor extends Interceptor {
   @override
@@ -288,3 +355,4 @@ class InternetConnectionInterceptor extends Interceptor {
     return super.onRequest(options, handler);
   }
 }
+

@@ -50,6 +50,7 @@ dependencies:
   flutter_dropdown_alert:
   bloc: ^8.1.4
   get:
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

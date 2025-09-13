@@ -3,6 +3,6 @@ import 'package:ayur/domain/core/failures/main_failures.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class PatientRepository {
-  Future<Either<MainFailure, PatientListModel>> GetPatients();
-  Future<Either<MainFailure, PatientListModel>> SearchPatients({String search, String date});
+  Future<Either<MainFailure, PatientListModel>> getPatients();
+  Future<Either<MainFailure, PatientListModel>> searchPatients({String search, String date});
 }

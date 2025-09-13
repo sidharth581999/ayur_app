@@ -1,6 +1,8 @@
 import 'package:ayur/application/core/serveice/dio_client.dart';
+import 'package:ayur/data/models/branch_model.dart';
 import 'package:ayur/data/models/login_model.dart';
 import 'package:ayur/data/models/patient_model.dart';
+import 'package:ayur/data/models/treatment_model.dart';
 import 'package:ayur/domain/core/exception/custom_exception.dart';
 import 'package:dio/dio.dart';
 
@@ -30,6 +32,47 @@ static Future<PatientListModel> getPatients() async {
     try {
       final response = await _dioClient.get(
         '/PatientList',
+      );
+      return PatientListModel.fromJson(response.data);
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(errMsg: e.toString());
+    }
+  }
+
+  //get branches
+static Future<Branches> getBranches() async {
+    try {
+      final response = await _dioClient.get(
+        '/BranchList',
+      );
+      return Branches.fromJson(response.data);
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(errMsg: e.toString());
+    }
+  }
+
+
+  //get treatments
+static Future<Treatments> getTreatments() async {
+    try {
+      final response = await _dioClient.get(
+        '/TreatmentList',
+      );
+      return Treatments.fromJson(response.data);
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      throw CustomException(errMsg: e.toString());
+    }
+  }
+
+
+  //registerPtients
+static Future<PatientListModel> registerPatient() async {
+    try {
+      final response = await _dioClient.get(
+        '/PatientUpdate',
       );
       return PatientListModel.fromJson(response.data);
     } catch (e) {

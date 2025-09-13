@@ -5,11 +5,14 @@ import 'package:ayur/application/core/utils/app_assets.dart';
 import 'package:ayur/application/core/utils/extentions.dart';
 import 'package:ayur/application/core/utils/status_bar_styler.dart';
 import 'package:ayur/application/core/utils/text_widget.dart';
+import 'package:ayur/data/models/branch_model.dart';
+import 'package:ayur/presentation/bloc/register_bloc/register_bloc.dart';
 import 'package:ayur/presentation/widgets/common_button.dart';
 import 'package:ayur/presentation/widgets/common_textformfield.dart';
 import 'package:ayur/presentation/widgets/shadow_container.dart';
 import 'package:ayur/presentation/widgets/underline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -26,6 +29,7 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   ValueNotifier<String?> _selectedPayment = ValueNotifier(null);
+  int? _selectedBranch;
 
   @override
   Widget build(BuildContext context) {
@@ -121,15 +125,19 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 12.sdp),
-                        _dropdownWithHeadder(
-                          context,
-                          "Branch",
-                          locationDropdown(
-                            "a",
-                            ["a", "b", "c"],
-                            (value) {},
-                            context,
-                          ),
+                        BlocBuilder<RegisterBloc, RegisterState>(
+                          builder: (context, state) {
+                            return _dropdownWithHeadder(
+                              context,
+                              "Branch",
+                              branchDropdown(
+                                _selectedBranch,
+                                state is RegisterBuildState && state.isLoading == false? state.branches : [],
+                                (value) {},
+                                context,
+                              ),
+                            );
+                          },
                         ),
                         SizedBox(height: 12.sdp),
                         TextWidget(
@@ -590,12 +598,12 @@ Widget locationDropdown(
 
 //branch dropdown
 Widget branchDropdown(
-  String value,
-  List<String> items,
-  Function(String?) onChanged,
+  int? value,
+  List<Branch> items,
+  Function(int?) onChanged,
   BuildContext context,
 ) {
-  return DropdownButtonFormField<String>(
+  return DropdownButtonFormField<int>(
     value: value,
     dropdownColor: ColorResources.greyContainer,
     decoration: dropdownInputDecoration(),
@@ -617,10 +625,10 @@ Widget branchDropdown(
     onChanged: onChanged,
     items: items
         .map(
-          (e) => DropdownMenuItem<String>(
-            value: e,
+          (e) => DropdownMenuItem<int>(
+            value: e.id,
             child: TextWidget(
-              text: e,
+              text: e.name,
               style: TextStyle(fontSize: 12.sdp, fontWeight: FontWeight.w400),
               textColor: context.dynamicColor(
                 light: ColorResources.black,
