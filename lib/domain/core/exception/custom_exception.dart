@@ -8,8 +8,8 @@ class CustomException implements Exception {
   final StackTrace? stackTrace;
 
   @override
-  String toString() =>
-      'CustomException(errMsg: $errMsg, stackTrace: $stackTrace)';
+  String toString() => '$errMsg';
+      // 'CustomException(errMsg: $errMsg, stackTrace: $stackTrace)';
 }
 
 class CustomFormValidationException implements Exception {

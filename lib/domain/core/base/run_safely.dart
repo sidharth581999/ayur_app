@@ -1,7 +1,7 @@
 import 'package:ayur/application/core/utils/logger.dart';
 import 'package:ayur/application/core/utils/typedefs.dart';
 import 'package:ayur/domain/core/exception/custom_exception.dart';
-import 'package:ayur/domain/core/failures/failures.dart';
+import 'package:ayur/domain/core/failures/main_failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 

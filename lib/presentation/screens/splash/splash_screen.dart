@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:ayur/application/core/route/app_route.dart';
 import 'package:ayur/application/core/theme/colors.dart';
 import 'package:ayur/application/core/utils/app_assets.dart';
 import 'package:ayur/application/core/utils/extentions.dart';
@@ -14,6 +15,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.pushReplacementNamed(context, AppRoute.login);
+  });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,6 +2,7 @@
 import 'package:ayur/application/core/utils/logger.dart';
 import 'package:ayur/presentation/screens/home/home.dart';
 import 'package:ayur/presentation/screens/login/login_screen.dart';
+import 'package:ayur/presentation/screens/register/register.dart';
 import 'package:ayur/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +14,14 @@ class AppRoute {
   static const String settings = '/settings';
   static const String login = '/login';
   static const String home = '/home';
+  static const String register = '/register';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     Logger.logWarning(
       'Route Name: ${settings.name},  Arguments: ${settings.arguments}, ArgumentType: ${settings.arguments.runtimeType}',
     );
 
-    final arguments = settings.arguments as Map<String, dynamic>?;
+    // final arguments = settings.arguments as Map<String, dynamic>?;
 
     switch (settings.name) {
       case splash:
@@ -30,6 +32,9 @@ class AppRoute {
 
       case home:
         return _pushRoute(settings, HomeScreen());
+
+      case register:
+        return _pushRoute(settings, RegisterScreen());
 
       default:
         return _pushRoute(

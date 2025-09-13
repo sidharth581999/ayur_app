@@ -5,13 +5,9 @@ import 'package:ayur/application/core/utils/logger.dart';
 import 'package:ayur/application/core/utils/urls.dart';
 import 'package:ayur/domain/core/exception/custom_exception.dart';
 import 'package:dio/dio.dart';
-
-
-import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-@lazySingleton
 class DioClient {
   final Dio dio;
   String? token;
@@ -86,44 +82,50 @@ class DioClient {
   }
 
   Future<Response> post(
-    String uri, {
-    data,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-    CancelToken? cancelToken,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    try {
-      var response = await dio.post(
-        uri,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken,
-        onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress,
-      );
-      return response;
-    } on SocketException catch (e) {
-      // print("no network - 1");
-      throw CustomException(
-        errMsg: e.toString(),
-      );
-    } on FormatException catch (_) {
-      throw CustomException(errMsg: "Unable to process the data");
-    } catch (e) {
-      if (e is DioException && e.message == "No internet connection") {
-        throw CustomException(errMsg: e.message ?? '');
-      }
-      if (e is DioException) {
-        final message = e.response?.data['message'];
-
-        throw CustomException(errMsg: '$message'.capitalize);
-      }
-      rethrow;
+  String uri, {
+  Map<String, dynamic>? data,
+  Map<String, dynamic>? queryParameters,
+  Options? options,
+  CancelToken? cancelToken,
+  ProgressCallback? onSendProgress,
+  ProgressCallback? onReceiveProgress,
+}) async {
+  try {
+    var response = await dio.post(
+      uri,
+      data: data != null ? FormData.fromMap(data) : null, // 👈 wrap as FormData
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+    return response;
+  } on SocketException catch (e) {
+    print("------------------------------)))");
+    throw CustomException(errMsg: e.toString());
+  } on FormatException catch (_) {
+    print("------------------------------000");
+    throw CustomException(errMsg: "Unable to process the data");
+  } catch (e) {
+    print("------------------------------999");
+    if (e is DioException && e.message == "No internet connection") {
+      throw CustomException(errMsg: e.message ?? '');
     }
+    if (e is DioException) {
+      print(e);
+      print(e.message);
+      print(e.error);
+      print(e.response?.data);
+      print("[[[[[[[[[[[[[[[[[[[[[[object]]]]]]]]]]]]]]]]]]]]]]");
+      final message = e.response?.data['message'];
+      print("----------$message");
+      throw CustomException(errMsg: '$message'.capitalize);
+    }
+    rethrow;
   }
+}
+
 
   Future<Response> put(
     String uri, {
