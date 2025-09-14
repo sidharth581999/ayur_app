@@ -33,9 +33,9 @@ class RegisterRepositoryImpl implements RegisterRepository {
   }
 
   @override
-  Future<Either<MainFailure, PatientListModel>> registerPatient() async {
+  Future<Either<MainFailure, dynamic>> registerPatient({Map<String, dynamic>? data}) async {
     try {
-      final result = await ApiClient.getPatients();
+      final result = await ApiClient.registerPatient(data!);
       return right(result);
     } catch (e) {
       return left(MainFailure.genericError(errorMsg: e.toString()));

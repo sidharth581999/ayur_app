@@ -219,7 +219,7 @@ class SortWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextWidget(
-                    text: "05-08-2025",
+                    text: DateTime.now().toString().substring(0,10),
                     style: TextStyle(
                       fontSize: 15.sdp,
                       fontWeight: FontWeight.w400,

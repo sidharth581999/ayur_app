@@ -25,9 +25,10 @@ class CommonTextFormField extends StatelessWidget {
   final Color? fillColor;
   final double? height;
   final bool? isReadonly ;
+  final VoidCallback? onTap;
 
   const CommonTextFormField({
-    super.key, required this.controller, this.obsecureText, this.isReadonly, this.validator, this.border, required this.hintText, this.hintStyle, this.contentPadding, this.prefix, this.errorBorder, this.focusBorder, this.enabledBorder, this.focusErrorBorder, this.onChanged, this.errorStyle, this.textStyle, this.filled, this.maxLines, this.fillColor, this.height, this.suffix
+    super.key, required this.controller, this.obsecureText, this.isReadonly, this.validator, this.border, required this.hintText, this.hintStyle, this.contentPadding, this.prefix, this.errorBorder, this.focusBorder, this.enabledBorder, this.focusErrorBorder, this.onChanged, this.errorStyle, this.textStyle, this.filled, this.maxLines, this.fillColor, this.height, this.suffix, this.onTap
   });
 
   @override
@@ -35,6 +36,7 @@ class CommonTextFormField extends StatelessWidget {
     return SizedBox(
       height: height,
       child: TextFormField(
+        onTap: onTap,
         readOnly: isReadonly?? false,
                   controller: controller,
                   obscureText: obsecureText?? false,

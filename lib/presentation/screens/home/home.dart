@@ -4,12 +4,10 @@ import 'package:ayur/application/core/utils/app_assets.dart';
 import 'package:ayur/application/core/utils/extentions.dart';
 import 'package:ayur/application/core/utils/status_bar_styler.dart';
 import 'package:ayur/application/core/utils/text_widget.dart';
-import 'package:ayur/data/models/patient_model.dart';
-import 'package:ayur/presentation/bloc/home_bloc/home_bloc.dart';
-import 'package:ayur/presentation/bloc/register_bloc/register_bloc.dart';
+import 'package:ayur/presentation/bloc/homeBloc/home_bloc.dart';
+import 'package:ayur/presentation/bloc/registerbuildBloc/register_bloc.dart';
 import 'package:ayur/presentation/screens/home/widgets/home_widgets.dart';
 import 'package:ayur/presentation/widgets/common_button.dart';
-import 'package:ayur/presentation/widgets/common_textformfield.dart';
 import 'package:ayur/presentation/widgets/error_widget.dart';
 import 'package:ayur/presentation/widgets/shimmer_loading.dart';
 import 'package:ayur/presentation/widgets/underline.dart';
@@ -86,43 +84,52 @@ Column(
                   SizedBox(height: 13.sdp),
                   UnderLine(height: 1, color: null),
                   SizedBox(height: 13.sdp),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.sdp),
-                    child: Column(
-                      children: [
-                        state.patients?.patient != null? 
-                        ListView.builder(
-                          itemCount: 1,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => PatientTile(patient: state.patients!.patient![index], index: index+1,) 
-                        ) : ErrorMessage(message: state.errorMsg??"", height:  double.maxFinite, width: double.maxFinite,),
-                        SizedBox(height: 12.sdp),
-                        CommonButton(
-                          buttoncolor: ColorResources.loginButtonGreen,
-                          onTap: () {
-                            context.read<RegisterBloc>().add(
-                          RegisterBuildEvent()
-                        );
-                            Navigator.pushNamed(context, AppRoute.register);
-                          },
-                          height: 50.sdp,
-                          width: double.maxFinite,
-                          borderRadious: 8.5,
-                          child: Center(
-                            child: TextWidget(
-                              text: "Register Now",
-                              style: TextStyle(
-                                fontSize: 17.sdp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textColor: context.dynamicColor(
-                                light: ColorResources.white,
-                                dark: ColorResources.white,
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.sdp),
+                      child: Column(
+                        children: [
+                          state.patients?.patient != null? 
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: state.patients?.patient?.length,
+                              shrinkWrap: true,
+                              // physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) => Padding(
+                                padding:  EdgeInsets.only(bottom:  10.sdp),
+                                child: PatientTile(patient: state.patients!.patient![index], index: index+1,),
+                              ) 
+                            ),
+                          ) : ErrorMessage(message: state.errorMsg??"", height:  double.maxFinite, width: double.maxFinite,),
+                          // SizedBox(height: 12.sdp),
+                          CommonButton(
+                            buttoncolor: ColorResources.loginButtonGreen,
+                            onTap: () {
+                              context.read<RegisterBloc>().add(
+                            RegisterBuildEvent()
+                          );
+                              Navigator.pushNamed(context, AppRoute.register);
+                            },
+                            height: 50.sdp,
+                            width: double.maxFinite,
+                            borderRadious: 8.5,
+                            child: Center(
+                              child: TextWidget(
+                                text: "Register Now",
+                                style: TextStyle(
+                                  fontSize: 17.sdp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textColor: context.dynamicColor(
+                                  light: ColorResources.white,
+                                  dark: ColorResources.white,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 12.sdp),
+                        ],
+                      ),
                     ),
                   ),
                 ],

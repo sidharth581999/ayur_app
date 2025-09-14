@@ -69,9 +69,9 @@ static Future<Treatments> getTreatments() async {
 
 
   //registerPtients
-static Future<PatientListModel> registerPatient() async {
+static Future<PatientListModel> registerPatient(Map<String,dynamic> data) async {
     try {
-      final response = await _dioClient.get(
+      final response = await _dioClient.post(
         '/PatientUpdate',
       );
       return PatientListModel.fromJson(response.data);

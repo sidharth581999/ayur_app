@@ -1,7 +1,7 @@
 import 'package:ayur/application/core/route/app_route.dart';
 import 'package:ayur/application/core/utils/toast.dart';
-import 'package:ayur/presentation/bloc/home_bloc/home_bloc.dart';
-import 'package:ayur/presentation/bloc/login_bloc/login_bloc.dart';
+import 'package:ayur/presentation/bloc/homeBloc/home_bloc.dart';
+import 'package:ayur/presentation/bloc/loginBloc/login_bloc.dart';
 import 'package:ayur/presentation/screens/login/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

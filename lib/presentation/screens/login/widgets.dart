@@ -2,7 +2,7 @@ import 'package:ayur/application/core/theme/colors.dart';
 import 'package:ayur/application/core/utils/app_assets.dart';
 import 'package:ayur/application/core/utils/extentions.dart';
 import 'package:ayur/application/core/utils/text_widget.dart';
-import 'package:ayur/presentation/bloc/login_bloc/login_bloc.dart';
+import 'package:ayur/presentation/bloc/loginBloc/login_bloc.dart';
 import 'package:ayur/presentation/widgets/common_button.dart';
 import 'package:ayur/presentation/widgets/common_textformfield.dart';
 import 'package:flutter/gestures.dart';

@@ -21,4 +21,8 @@ class RegisterPatients {
   Future<Either<MainFailure, Treatments>> getTreatments() {
     return repository.getTreatments();
   }
+
+  Future<Either<MainFailure, dynamic>> registerPatient({Map<String, dynamic>? data}) {
+    return repository.registerPatient(data: data!);
+  }
 }
