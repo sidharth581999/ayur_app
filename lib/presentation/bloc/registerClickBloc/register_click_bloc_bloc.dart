@@ -13,7 +13,12 @@ class RegisterClickBlocBloc extends Bloc<RegisterClickBlocEvent, RegisterClickBl
   }
 
   FutureOr<void> registerClickedEvent(RegisterClickedEvent event, Emitter<RegisterClickBlocState> emit) async{
+    emit(RegisterClickedState(isLoading: true, isError: false, isSuccess: false, errorMsg: null));
     final regUser = RegisterPatients.defaultRepo();
-    final branches = await regUser.registerPatient(data: event.data);  
+    final responce = await regUser.registerPatient(data: event.data); 
+    emit(
+      responce.fold((l)=>RegisterClickedState(isLoading: false, isError: true, isSuccess: false, errorMsg: l.errorMsg),
+      (r) => RegisterClickedState(isLoading: false, isError: false, isSuccess: true, errorMsg: "Succesfully registered"),)
+    );
   }
 }

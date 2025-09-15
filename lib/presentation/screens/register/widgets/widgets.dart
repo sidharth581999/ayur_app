@@ -62,108 +62,106 @@ import 'package:flutter_svg/svg.dart';
 
                                     color: ColorResources.greyContainer,
                                   ),
-                                  child: Expanded(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                            20.sdp,
-                                            15.sdp,
-                                            10.sdp,
-                                            15.sdp,
-                                          ),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              TextWidget(
-                                                text: "$index.",
-                                                style: TextStyle(
-                                                  fontSize: 16.sdp,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                textColor: context.dynamicColor(
-                                                  light: ColorResources.black,
-                                                  dark: ColorResources.black,
-                                                ),
-                                              ),
-                                              SizedBox(width: 10.sdp),
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: TextWidget(
-                                                            text: treatment.treatment.name,
-                                                            style: TextStyle(
-                                                              fontSize: 16.sdp,
-                                                              fontWeight:
-                                                                  FontWeight.w500,
-                                                            ),
-                                                            textColor: context
-                                                                .dynamicColor(
-                                                                  light: ColorResources
-                                                                      .black,
-                                                                  dark: ColorResources
-                                                                      .black,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(width: 5.sdp),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            addedTreatments.value.removeAt(index-1);
-                                                            treatmentChangeNotifier.value++;
-                                                          },
-                                                          child: CircleAvatar(
-                                                            radius: 11.sdp,
-                                                            backgroundColor:
-                                                                ColorResources.lightRedBg
-                                                                    .withOpacity(0.5),
-                                                            child: Center(
-                                                              child: Icon(
-                                                                Icons.close,
-                                                                size: 14.sdp,
-                                                                color:
-                                                                    ColorResources.white,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: 4.sdp),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        _countRow(context, "Male", "${treatment.maleCount}"),
-                                                        _countRow(
-                                                          context,
-                                                          "Female",
-                                                          "${treatment.femaleCount}",
-                                                        ),
-                                                        InkWell(
-                                                          onTap: () {
-                                                            showTreatmentDialog(addedTreatments, treatmentChangeNotifier, context, treatment.maleCount, treatment.femaleCount, treatment.treatment);
-                                                          },
-                                                          child: SvgPicture.asset(
-                                                            AppAssets.editPen,
-                                                            height: 20.sdp,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                          20.sdp,
+                                          15.sdp,
+                                          10.sdp,
+                                          15.sdp,
                                         ),
-                                      ],
-                                    ),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            TextWidget(
+                                              text: "$index.",
+                                              style: TextStyle(
+                                                fontSize: 16.sdp,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              textColor: context.dynamicColor(
+                                                light: ColorResources.black,
+                                                dark: ColorResources.black,
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.sdp),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: TextWidget(
+                                                          text: treatment.treatment.name,
+                                                          style: TextStyle(
+                                                            fontSize: 16.sdp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                          textColor: context
+                                                              .dynamicColor(
+                                                                light: ColorResources
+                                                                    .black,
+                                                                dark: ColorResources
+                                                                    .black,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 5.sdp),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          addedTreatments.value.removeAt(index-1);
+                                                          treatmentChangeNotifier.value++;
+                                                        },
+                                                        child: CircleAvatar(
+                                                          radius: 11.sdp,
+                                                          backgroundColor:
+                                                              ColorResources.lightRedBg
+                                                                  .withOpacity(0.5),
+                                                          child: Center(
+                                                            child: Icon(
+                                                              Icons.close,
+                                                              size: 14.sdp,
+                                                              color:
+                                                                  ColorResources.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 4.sdp),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      _countRow(context, "Male", "${treatment.maleCount}"),
+                                                      _countRow(
+                                                        context,
+                                                        "Female",
+                                                        "${treatment.femaleCount}",
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showTreatmentDialog(addedTreatments, treatmentChangeNotifier, context, treatment.maleCount, treatment.femaleCount, treatment.treatment);
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          AppAssets.editPen,
+                                                          height: 20.sdp,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 );
   }

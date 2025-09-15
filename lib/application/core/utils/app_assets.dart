@@ -10,4 +10,6 @@ class AppAssets {
   static const person2 = '$baseDir/person2.svg';
   static const calander = '$baseDir/calander.svg';
   static const editPen = '$baseDir/pen.svg';
+  static const logoPng = '$baseDir/logoPng.png';
+  static const sign = '$baseDir/sign.png';
 }

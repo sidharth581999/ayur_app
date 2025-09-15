@@ -5,6 +5,7 @@ import 'package:ayur/application/core/utils/enums.dart';
 import 'package:ayur/application/core/utils/toast.dart';
 import 'package:ayur/presentation/bloc/homeBloc/home_bloc.dart';
 import 'package:ayur/presentation/bloc/loginBloc/login_bloc.dart';
+import 'package:ayur/presentation/bloc/pdfBloc/pdf_bloc.dart';
 import 'package:ayur/presentation/bloc/registerClickBloc/register_click_bloc_bloc.dart';
 import 'package:ayur/presentation/bloc/registerbuildBloc/register_bloc.dart';
 import 'package:ayur/presentation/bloc/theme_cubit.dart';
@@ -41,6 +42,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RegisterClickBlocBloc>(
           create: (_) => RegisterClickBlocBloc(),
+        ),
+        BlocProvider<PdfBloc>(
+          create: (_) => PdfBloc(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, AppThemeMode>(

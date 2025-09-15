@@ -25,163 +25,161 @@ class PatientTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.sdp),
         color: ColorResources.greyContainer,
       ),
-      child: Expanded(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextWidget(
-                      text: "$index.",
-                      style: TextStyle(
-                        fontSize: 18.sdp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textColor: context.dynamicColor(
-                        light: ColorResources.black,
-                        dark: ColorResources.black,
-                      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 20.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextWidget(
+                    text: "$index.",
+                    style: TextStyle(
+                      fontSize: 18.sdp,
+                      fontWeight: FontWeight.w500,
                     ),
-                    SizedBox(width: 10.sdp),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextWidget(
-                            text: patient.name,
-                            style: TextStyle(
-                              fontSize: 18.sdp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textColor: context.dynamicColor(
-                              light: ColorResources.black,
-                              dark: ColorResources.black,
-                            ),
-                          ),
-
-                          TextWidget(
-                            maxLines: 1,
-                            text: patient.patientdetailsSet != null && patient.patientdetailsSet!.isNotEmpty?
-                                patient.patientdetailsSet![0].treatmentName : "",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16.sdp,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            textColor: context.dynamicColor(
-                              light: ColorResources.lightGreenText,
-                              dark: ColorResources.lightGreenText,
-                            ),
-                          ),
-                          SizedBox(height: 15.sdp),
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    AppAssets.calander,
-                                    height: 15.sdp,
-                                  ),
-                                  SizedBox(width: 4.sdp),
-                                  TextWidget(
-                                    maxLines: 1,
-                                    text: patient.createdAt?.toString().substring(0,10),
-                                    style: TextStyle(
-                                      fontSize: 15.sdp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    textColor: context.dynamicColor(
-                                      light: ColorResources.lightBlacktext,
-                                      dark: ColorResources.lightBlacktext,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 15.sdp),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      AppAssets.person2,
-                                      height: 15.sdp,
-                                    ),
-                                    SizedBox(width: 4.sdp),
-                                    Expanded(
-                                      child: TextWidget(
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        text: "Jithesh",
-                                        style: TextStyle(
-                                          fontSize: 15.sdp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        textColor: context.dynamicColor(
-                                          light: ColorResources.lightBlacktext,
-                                          dark: ColorResources.lightBlacktext,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    textColor: context.dynamicColor(
+                      light: ColorResources.black,
+                      dark: ColorResources.black,
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 12.sdp),
-              UnderLine(height: 1, color: null),
-              SizedBox(height: 12.sdp),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+                  ),
+                  SizedBox(width: 10.sdp),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(width: 10.sdp),
                         TextWidget(
-                          text: "1.",
+                          text: patient.name,
                           style: TextStyle(
                             fontSize: 18.sdp,
                             fontWeight: FontWeight.w500,
-                          ),
-                          textColor: context.dynamicColor(
-                            light: ColorResources.greyContainer,
-                            dark: ColorResources.greyContainer,
-                          ),
-                        ),
-                        TextWidget(
-                          text: "View Booking details",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 16.sdp,
-                            fontWeight: FontWeight.w300,
                           ),
                           textColor: context.dynamicColor(
                             light: ColorResources.black,
                             dark: ColorResources.black,
                           ),
                         ),
+      
+                        TextWidget(
+                          maxLines: 1,
+                          text: patient.patientdetailsSet != null && patient.patientdetailsSet!.isNotEmpty?
+                              patient.patientdetailsSet![0].treatmentName : "",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 16.sdp,
+                            fontWeight: FontWeight.w300,
+                          ),
+                          textColor: context.dynamicColor(
+                            light: ColorResources.lightGreenText,
+                            dark: ColorResources.lightGreenText,
+                          ),
+                        ),
+                        SizedBox(height: 15.sdp),
+                        Row(
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppAssets.calander,
+                                  height: 15.sdp,
+                                ),
+                                SizedBox(width: 4.sdp),
+                                TextWidget(
+                                  maxLines: 1,
+                                  text: patient.createdAt?.toString().substring(0,10),
+                                  style: TextStyle(
+                                    fontSize: 15.sdp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  textColor: context.dynamicColor(
+                                    light: ColorResources.lightBlacktext,
+                                    dark: ColorResources.lightBlacktext,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 15.sdp),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    AppAssets.person2,
+                                    height: 15.sdp,
+                                  ),
+                                  SizedBox(width: 4.sdp),
+                                  Expanded(
+                                    child: TextWidget(
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      text: "Jithesh",
+                                      style: TextStyle(
+                                        fontSize: 15.sdp,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      textColor: context.dynamicColor(
+                                        light: ColorResources.lightBlacktext,
+                                        dark: ColorResources.lightBlacktext,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: ColorResources.lightGreenText,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 12.sdp),
+            UnderLine(height: 1, color: null),
+            SizedBox(height: 12.sdp),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(width: 10.sdp),
+                      TextWidget(
+                        text: "1.",
+                        style: TextStyle(
+                          fontSize: 18.sdp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textColor: context.dynamicColor(
+                          light: ColorResources.greyContainer,
+                          dark: ColorResources.greyContainer,
+                        ),
+                      ),
+                      TextWidget(
+                        text: "View Booking details",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16.sdp,
+                          fontWeight: FontWeight.w300,
+                        ),
+                        textColor: context.dynamicColor(
+                          light: ColorResources.black,
+                          dark: ColorResources.black,
+                        ),
+                      ),
+                    ],
+                  ),
+      
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: ColorResources.lightGreenText,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

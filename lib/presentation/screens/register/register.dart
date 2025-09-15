@@ -1,12 +1,18 @@
 // ignore_for_file: deprecated_member_use
 
+
+
+import 'package:ayur/application/core/route/app_route.dart';
 import 'package:ayur/application/core/theme/colors.dart';
 import 'package:ayur/application/core/utils/app_assets.dart';
 import 'package:ayur/application/core/utils/date_time_picker.dart';
 import 'package:ayur/application/core/utils/extentions.dart';
 import 'package:ayur/application/core/utils/status_bar_styler.dart';
 import 'package:ayur/application/core/utils/text_widget.dart';
+import 'package:ayur/application/core/utils/toast.dart';
 import 'package:ayur/data/models/treatment_model.dart';
+import 'package:ayur/presentation/bloc/pdfBloc/pdf_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:ayur/presentation/bloc/registerClickBloc/register_click_bloc_bloc.dart';
 import 'package:ayur/presentation/bloc/registerbuildBloc/register_bloc.dart';
 import 'package:ayur/presentation/screens/register/widgets/dropdowns.dart';
@@ -144,7 +150,9 @@ class RegisterScreen extends StatelessWidget {
                               branchDropdown(
                                 _selectedBranch,
                                 state is RegisterBuildState && state.isLoading == false? state.branches : [],
-                                (value) {},
+                                (value) {
+                                  _selectedBranch = value;
+                                },
                                 context,
                               ),
                             );
@@ -302,81 +310,82 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 12.sdp),
-                        Expanded(
-                          child: ValueListenableBuilder(
-                            valueListenable: timeController,
-                            builder: (context, value, child) =>  Row(
-                              children: [
-                                Expanded(
-                                  child: textWithHeadder(
-                                    context,
-                                    "Treatment Time",
-                                    CommonTextFormField(
-                                      onTap: () async{
-                                          final pickedTime = await pickTime(context, initialTime: timeController.value);
-                                  if (pickedTime != null) {
-                                      timeController.value = pickedTime;
-                                  }
-                                      },
-                                      isReadonly: true,
-                                      controller: timeController.value == null? TextEditingController() : TextEditingController(text: timeController.value!.hour.toString().padLeft(2, '0')),
-                                      hintText: "Hour",
-                                      suffix: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.timer,
-                                            color: ColorResources.lightGreenText,
-                                            size: 22.sdp,
-                                          ),
-                                        ],
-                                      ),
+                        ValueListenableBuilder(
+                          valueListenable: timeController,
+                          builder: (context, value, child) =>  Row(
+                            children: [
+                              Expanded(
+                                child: textWithHeadder(
+                                  context,
+                                  "Treatment Time",
+                                  CommonTextFormField(
+                                    onTap: () async{
+                                        final pickedTime = await pickTime(context, initialTime: timeController.value);
+                                if (pickedTime != null) {
+                                    timeController.value = pickedTime;
+                                }
+                                    },
+                                    isReadonly: true,
+                                    controller: timeController.value == null? TextEditingController() : TextEditingController(text: timeController.value!.hour.toString().padLeft(2, '0')),
+                                    hintText: "Hour",
+                                    suffix: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.timer,
+                                          color: ColorResources.lightGreenText,
+                                          size: 22.sdp,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 10.sdp),
-                                Expanded(
-                                  child: textWithHeadder(
-                                    context,
-                                    "",
-                                    CommonTextFormField(
-                                      onTap: () async{
-                                          final pickedTime = await pickTime(context, initialTime: timeController.value);
-                                  if (pickedTime != null) {
-                                      timeController.value = pickedTime;
-                                  }
-                                      },
-                                      isReadonly: true,
-                                      controller:  timeController.value == null? TextEditingController() : TextEditingController(text: timeController.value!.minute.toString().padLeft(2, '0')),
-                                      hintText: "Minute",
-                                      suffix: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.timer,
-                                            color: ColorResources.lightGreenText,
-                                            size: 22.sdp,
-                                          ),
-                                        ],
-                                      ),
+                              ),
+                              SizedBox(width: 10.sdp),
+                              Expanded(
+                                child: textWithHeadder(
+                                  context,
+                                  "",
+                                  CommonTextFormField(
+                                    onTap: () async{
+                                        final pickedTime = await pickTime(context, initialTime: timeController.value);
+                                if (pickedTime != null) {
+                                    timeController.value = pickedTime;
+                                }
+                                    },
+                                    isReadonly: true,
+                                    controller:  timeController.value == null? TextEditingController() : TextEditingController(text: timeController.value!.minute.toString().padLeft(2, '0')),
+                                    hintText: "Minute",
+                                    suffix: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.timer,
+                                          color: ColorResources.lightGreenText,
+                                          size: 22.sdp,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: 20.sdp),
-
+                        BlocConsumer<RegisterClickBlocBloc, RegisterClickBlocState>(
+            builder: (context, state) {
+              return
                         CommonButton(
                           buttoncolor: ColorResources.loginButtonGreen,
                           onTap: () {
+                          state is RegisterClickedState && state.isLoading == true? () :
                            context.read<RegisterClickBlocBloc>().add(
                           RegisterClickedEvent(
                             data: { "name": nameController.text,             
-  "excecutive": "",        
+  "excecutive": "abc",        
   "payment": _selectedPayment.value,          
   "phone": whatsupController.text,             
   "address": addressController.text,           
@@ -384,11 +393,12 @@ class RegisterScreen extends StatelessWidget {
   "discount_amount": double.tryParse(discountController.text), 
   "advance_amount": double.tryParse(adwanceController.text),   
   "balance_amount": double.tryParse(balanceController.text),   
-  "id": "",          
+  "id": "1",  
+  "date_nd_time": formatDateTime(dateController.value!, timeController.value!),      
   "male": getMaleTreatmentIds(addedTreatments.value), 
   "female": getfemaleTreatmentIds(addedTreatments.value),            
-  "branch": "166",            
-  "treatments": "100,86",  }  
+  "branch": _selectedBranch,            
+  "treatments": getAllTreatmentIds(addedTreatments.value),   }  
                           ),
                         );
                           },
@@ -396,7 +406,9 @@ class RegisterScreen extends StatelessWidget {
                           width: double.maxFinite,
                           borderRadious: 8.5,
                           child: Center(
-                            child: TextWidget(
+                            child: 
+                            state is RegisterClickedState && state.isLoading == true?   CircularProgressIndicator(color: ColorResources.white,):
+                            TextWidget(
                               text: "Save",
                               style: TextStyle(
                                 fontSize: 17.sdp,
@@ -408,7 +420,18 @@ class RegisterScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ),
+                        );}, listener: (BuildContext context, RegisterClickBlocState state) { 
+                          if (state is RegisterClickedState && state.isError) {
+                            addedTreatments.value.clear();
+                            HelperService.showCustomToast(message: state.errorMsg??"",type: "error");
+                            context.read<PdfBloc>().add(PdfBuidEvent(treatments: addedTreatments.value, name: nameController.text, address: addressController.text, nmber: whatsupController.text, adwance: adwanceController.text, amount: amountController.text, discount: discountController.text, balance: balanceController.text, dateTime: formatDateTime(dateController.value!, timeController.value!),));
+                            Navigator.of(context).pushReplacementNamed(AppRoute.pdfScreen);
+                          } else if(state is RegisterClickedState && state.isSuccess) {
+                            addedTreatments.value.clear();
+                            HelperService.showCustomToast(message: "Successfully Registered",);
+                            context.read<PdfBloc>().add(PdfBuidEvent(treatments: addedTreatments.value, name: nameController.text, address: addressController.text, nmber: whatsupController.text, adwance: adwanceController.text, amount: amountController.text, discount: discountController.text, balance: balanceController.text, dateTime: formatDateTime(dateController.value!, timeController.value!),));
+                          }
+                         },)
                       ],
                     ),
                   ),
@@ -480,3 +503,23 @@ String getfemaleTreatmentIds(List<AddedTreatmentModel> treatments) {
       .where((t) => t.femaleCount > 0) 
       .map((t) => t.treatment.id.toString()) 
       .join(','); }
+
+String getAllTreatmentIds(List<AddedTreatmentModel> treatments) {
+  return treatments
+      .map((t) => t.treatment.id.toString()) 
+      .join(','); }
+
+
+      //format date time
+String formatDateTime(DateTime date, TimeOfDay time) {
+  final combined = DateTime(
+    date.year,
+    date.month,
+    date.day,
+    time.hour,
+    time.minute,
+  );
+
+  final formatter = DateFormat('dd/MM/yyyy-hh:mm a');
+  return formatter.format(combined);
+}

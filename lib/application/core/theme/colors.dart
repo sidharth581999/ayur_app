@@ -17,4 +17,6 @@ static const Color lightRedBg = Color(0xFFF21E1E);
 static const Color greenShadow = Color(0xFF006837);
 static const Color lightButtonGreen = Color(0xFF389A48);
 static const Color greyTextFormContainerBg = Color(0xFFD9D9D9);
+static const Color lightGreenText2 = Color(0xFF00A64F);
+static const Color greyDarkText = Color(0xFF9A9A9A);
 }

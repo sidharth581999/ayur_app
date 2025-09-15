@@ -2,6 +2,7 @@
 import 'package:ayur/application/core/utils/logger.dart';
 import 'package:ayur/presentation/screens/home/home.dart';
 import 'package:ayur/presentation/screens/login/login_screen.dart';
+import 'package:ayur/presentation/screens/pdfView/pdf_screen.dart';
 import 'package:ayur/presentation/screens/register/register.dart';
 import 'package:ayur/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class AppRoute {
   static const String login = '/login';
   static const String home = '/home';
   static const String register = '/register';
+  static const String pdfScreen = '/pdfScreen';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     Logger.logWarning(
@@ -35,6 +37,9 @@ class AppRoute {
 
       case register:
         return _pushRoute(settings, RegisterScreen());
+
+      case pdfScreen:
+        return _pushRoute(settings, PdfScreen());
 
       default:
         return _pushRoute(
