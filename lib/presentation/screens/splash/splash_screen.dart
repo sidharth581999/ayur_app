@@ -4,7 +4,10 @@ import 'package:ayur/application/core/route/app_route.dart';
 import 'package:ayur/application/core/theme/colors.dart';
 import 'package:ayur/application/core/utils/app_assets.dart';
 import 'package:ayur/application/core/utils/extentions.dart';
+import 'package:ayur/data/storage/login_data.dart';
+import 'package:ayur/presentation/bloc/homeBloc/home_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-    Navigator.pushReplacementNamed(context, AppRoute.login);
+    loginCheck();
   });
   }
 
@@ -49,5 +52,18 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
       ),
           ));
+  }
+
+  loginCheck() async{
+    // LoginDataStore.clearLogin();
+    final res = await LoginDataStore.getLogin();
+    if (res != null && res.token != null) {
+      context.read<HomeBloc>().add(
+                          HomeBuildEvent()
+                        );
+      Navigator.pushReplacementNamed(context, AppRoute.home);
+    } else{
+      Navigator.pushReplacementNamed(context, AppRoute.login);
+    }
   }
 }

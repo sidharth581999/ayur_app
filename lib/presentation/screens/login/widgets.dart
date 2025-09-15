@@ -66,6 +66,11 @@ class FormSection extends StatelessWidget {
                   CommonTextFormField(
                     controller: emailController,
                     hintText: "Enter your email",
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Field can,t be empty";
+                              } return null;
+                            },
                   ),
                   SizedBox(height: 16.sdp),
                   TextWidget(

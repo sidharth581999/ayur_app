@@ -4,6 +4,7 @@ import 'package:ayur/application/core/utils/text_widget.dart';
 import 'package:ayur/data/models/branch_model.dart';
 import 'package:ayur/data/models/treatment_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 
 
 
@@ -95,6 +96,11 @@ Widget branchDropdown(
           ),
         )
         .toList(),
+        validator: (value) {
+          if (value == null) {
+            return "Field can't be empty";
+          } return null;
+        },
   );
 }
 
